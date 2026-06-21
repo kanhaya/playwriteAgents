@@ -1,6 +1,38 @@
-<testsuites id="" name="" tests="6" failures="0" skipped="0" errors="3" time="19.524806">
-<testsuite name="cart.spec.ts" timestamp="2026-06-21T08:44:39.462Z" hostname="chromium" tests="1" failures="0" skipped="0" time="15.996" errors="1">
-<testcase name="Cart operations › Add product, update quantity and verify totals (scaffold)" classname="cart.spec.ts" time="15.996">
+<testsuites id="" name="" tests="45" failures="0" skipped="0" errors="23" time="76.200277">
+<testsuite name="accessibility.spec.ts" timestamp="2026-06-21T10:56:11.207Z" hostname="chromium" tests="1" failures="0" skipped="0" time="4.17" errors="1">
+<testcase name="Basic accessibility snapshot (scaffold)" classname="accessibility.spec.ts" time="4.17">
+<system-out>
+<![CDATA[
+[[ATTACHMENT|../test-results/accessibility-Basic-accessibility-snapshot-scaffold--chromium/test-failed-1.png]]
+
+[[ATTACHMENT|../test-results/accessibility-Basic-accessibility-snapshot-scaffold--chromium/error-context.md]]
+]]>
+</system-out>
+<error message="Cannot read properties of undefined (reading &apos;snapshot&apos;)" type="TypeError">
+<![CDATA[  [chromium] › accessibility.spec.ts:3:5 › Basic accessibility snapshot (scaffold) ─────────────────
+
+    TypeError: Cannot read properties of undefined (reading 'snapshot')
+
+      3 | test('Basic accessibility snapshot (scaffold)', async ({ page }) => {
+      4 |   await page.goto('/');
+    > 5 |   const snapshot = await page.accessibility.snapshot();
+        |                                             ^
+      6 |   // Ensure snapshot is an object and contains a root
+      7 |   expect(typeof snapshot).toBe('object');
+      8 |   expect(snapshot.role).toBeDefined();
+        at /Users/kanhaiyayadav/workspace/playwriteAgents/tests/accessibility.spec.ts:5:45
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../test-results/accessibility-Basic-accessibility-snapshot-scaffold--chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../test-results/accessibility-Basic-accessibility-snapshot-scaffold--chromium/error-context.md
+]]>
+</error>
+</testcase>
+</testsuite>
+<testsuite name="cart.spec.ts" timestamp="2026-06-21T10:56:11.207Z" hostname="chromium" tests="1" failures="0" skipped="0" time="14.415" errors="1">
+<testcase name="Cart operations › Add product, update quantity and verify totals (scaffold)" classname="cart.spec.ts" time="14.415">
 <system-out>
 <![CDATA[
 [[ATTACHMENT|../test-results/cart-Cart-operations-Add-p-3c87b-and-verify-totals-scaffold--chromium/test-failed-1.png]]
@@ -8,24 +40,24 @@
 [[ATTACHMENT|../test-results/cart-Cart-operations-Add-p-3c87b-and-verify-totals-scaffold--chromium/error-context.md]]
 ]]>
 </system-out>
-<error message="locator.fill: Timeout 10000ms exceeded." type="TimeoutError">
+<error message="locator.waitFor: Timeout 10000ms exceeded." type="TimeoutError">
 <![CDATA[  [chromium] › cart.spec.ts:15:7 › Cart operations › Add product, update quantity and verify totals (scaffold) 
 
-    TimeoutError: locator.fill: Timeout 10000ms exceeded.
+    TimeoutError: locator.waitFor: Timeout 10000ms exceeded.
     Call log:
-      - waiting for locator('input.search-keyword')
+      - waiting for locator('input.search-keyword') to be visible
 
 
-       at pages/HomePage.ts:23
+       at pages/HomePage.ts:24
 
-      21 |   async search(query: string) {
-      22 |     await this.searchInput.fill(query);
-    > 23 |     // Wait for results to update
+      22 |     // Ensure the search input is visible and ready before filling
+      23 |     await this.searchInput.waitFor({ state: 'visible', timeout: 10000 });
+    > 24 |     await this.searchInput.fill(query);
          |                            ^
-      24 |     await this.page.waitForTimeout(500);
-      25 |   }
-      26 |
-        at HomePage.search (/Users/kanhaiyayadav/workspace/playwriteAgents/tests/pages/HomePage.ts:23:28)
+      25 |     // Wait for product results to appear / update
+      26 |     await this.page.waitForSelector('.products .product', { timeout: 5000 });
+      27 |   }
+        at HomePage.search (/Users/kanhaiyayadav/workspace/playwriteAgents/tests/pages/HomePage.ts:24:28)
         at /Users/kanhaiyayadav/workspace/playwriteAgents/tests/cart.spec.ts:25:16
 
     attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
@@ -37,8 +69,12 @@
 </error>
 </testcase>
 </testsuite>
-<testsuite name="checkout.spec.ts" timestamp="2026-06-21T08:44:39.462Z" hostname="chromium" tests="1" failures="0" skipped="0" time="15.934" errors="1">
-<testcase name="Checkout flow (scaffold) › Apply promo and validate price change" classname="checkout.spec.ts" time="15.934">
+<testsuite name="check-url.spec.ts" timestamp="2026-06-21T10:56:11.207Z" hostname="chromium" tests="1" failures="0" skipped="0" time="4.594" errors="0">
+<testcase name="Load Rahul Shetty Selenium Practise homepage" classname="check-url.spec.ts" time="4.594">
+</testcase>
+</testsuite>
+<testsuite name="checkout.spec.ts" timestamp="2026-06-21T10:56:11.207Z" hostname="chromium" tests="1" failures="0" skipped="0" time="14.957" errors="1">
+<testcase name="Checkout flow (scaffold) › Apply promo and validate price change" classname="checkout.spec.ts" time="14.957">
 <system-out>
 <![CDATA[
 [[ATTACHMENT|../test-results/checkout-Checkout-flow-sca-68050-o-and-validate-price-change-chromium/test-failed-1.png]]
@@ -46,24 +82,24 @@
 [[ATTACHMENT|../test-results/checkout-Checkout-flow-sca-68050-o-and-validate-price-change-chromium/error-context.md]]
 ]]>
 </system-out>
-<error message="locator.fill: Timeout 10000ms exceeded." type="TimeoutError">
+<error message="locator.waitFor: Timeout 10000ms exceeded." type="TimeoutError">
 <![CDATA[  [chromium] › checkout.spec.ts:15:7 › Checkout flow (scaffold) › Apply promo and validate price change 
 
-    TimeoutError: locator.fill: Timeout 10000ms exceeded.
+    TimeoutError: locator.waitFor: Timeout 10000ms exceeded.
     Call log:
-      - waiting for locator('input.search-keyword')
+      - waiting for locator('input.search-keyword') to be visible
 
 
-       at pages/HomePage.ts:23
+       at pages/HomePage.ts:24
 
-      21 |   async search(query: string) {
-      22 |     await this.searchInput.fill(query);
-    > 23 |     // Wait for results to update
+      22 |     // Ensure the search input is visible and ready before filling
+      23 |     await this.searchInput.waitFor({ state: 'visible', timeout: 10000 });
+    > 24 |     await this.searchInput.fill(query);
          |                            ^
-      24 |     await this.page.waitForTimeout(500);
-      25 |   }
-      26 |
-        at HomePage.search (/Users/kanhaiyayadav/workspace/playwriteAgents/tests/pages/HomePage.ts:23:28)
+      25 |     // Wait for product results to appear / update
+      26 |     await this.page.waitForSelector('.products .product', { timeout: 5000 });
+      27 |   }
+        at HomePage.search (/Users/kanhaiyayadav/workspace/playwriteAgents/tests/pages/HomePage.ts:24:28)
         at /Users/kanhaiyayadav/workspace/playwriteAgents/tests/checkout.spec.ts:25:16
 
     attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
@@ -75,46 +111,770 @@
 </error>
 </testcase>
 </testsuite>
-<testsuite name="example.spec.ts" timestamp="2026-06-21T08:44:39.462Z" hostname="chromium" tests="2" failures="0" skipped="0" time="9.187" errors="0">
-<testcase name="has title" classname="example.spec.ts" time="4.465">
+<testsuite name="example.spec.ts" timestamp="2026-06-21T10:56:11.207Z" hostname="chromium" tests="2" failures="0" skipped="0" time="2.417" errors="0">
+<testcase name="has title" classname="example.spec.ts" time="1.006">
 </testcase>
-<testcase name="get started link" classname="example.spec.ts" time="4.722">
+<testcase name="get started link" classname="example.spec.ts" time="1.411">
 </testcase>
 </testsuite>
-<testsuite name="search-and-add.spec.ts" timestamp="2026-06-21T08:44:39.462Z" hostname="chromium" tests="1" failures="0" skipped="0" time="10.552" errors="1">
-<testcase name="Search and add flow › Search for product and add to cart" classname="search-and-add.spec.ts" time="10.552">
+<testsuite name="network.spec.ts" timestamp="2026-06-21T10:56:11.207Z" hostname="chromium" tests="1" failures="0" skipped="0" time="2.599" errors="1">
+<testcase name="Offline handling shows error or offline indicator (scaffold)" classname="network.spec.ts" time="2.599">
 <system-out>
 <![CDATA[
+[[ATTACHMENT|../test-results/network-Offline-handling-s-27936-offline-indicator-scaffold--chromium/test-failed-1.png]]
+
+[[ATTACHMENT|../test-results/network-Offline-handling-s-27936-offline-indicator-scaffold--chromium/error-context.md]]
+]]>
+</system-out>
+<error message="page.reload: net::ERR_INTERNET_DISCONNECTED" type="Error">
+<![CDATA[  [chromium] › network.spec.ts:3:5 › Offline handling shows error or offline indicator (scaffold) ──
+
+    Error: page.reload: net::ERR_INTERNET_DISCONNECTED
+    Call log:
+      - waiting for navigation until "load"
+
+
+       5 |   await page.context().setOffline(true);
+       6 |   // Reload to simulate offline navigation
+    >  7 |   await page.reload();
+         |              ^
+       8 |   // Check for some offline indicator or failure state - scaffold
+       9 |   expect(await page.title()).toBeTruthy();
+      10 | });
+        at /Users/kanhaiyayadav/workspace/playwriteAgents/tests/network.spec.ts:7:14
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../test-results/network-Offline-handling-s-27936-offline-indicator-scaffold--chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../test-results/network-Offline-handling-s-27936-offline-indicator-scaffold--chromium/error-context.md
+]]>
+</error>
+</testcase>
+</testsuite>
+<testsuite name="payment.spec.ts" timestamp="2026-06-21T10:56:11.207Z" hostname="chromium" tests="1" failures="0" skipped="0" time="3.482" errors="0">
+<testcase name="Payment form validation (scaffold)" classname="payment.spec.ts" time="3.482">
+</testcase>
+</testsuite>
+<testsuite name="product.spec.ts" timestamp="2026-06-21T10:56:11.207Z" hostname="chromium" tests="1" failures="0" skipped="0" time="0.599" errors="1">
+<testcase name="Product detail opens from listing (scaffold)" classname="product.spec.ts" time="0.599">
+<system-out>
+<![CDATA[
+[[ATTACHMENT|../test-results/product-Product-detail-opens-from-listing-scaffold--chromium/test-failed-1.png]]
+
+[[ATTACHMENT|../test-results/product-Product-detail-opens-from-listing-scaffold--chromium/error-context.md]]
+]]>
+</system-out>
+<error message="HomePage is not a constructor" type="TypeError">
+<![CDATA[  [chromium] › product.spec.ts:3:5 › Product detail opens from listing (scaffold) ──────────────────
+
+    TypeError: HomePage is not a constructor
+
+      4 |   const { default: HomePage } = await import('./pages/HomePage');
+      5 |   const { default: ProductPage } = await import('./pages/ProductPage');
+    > 6 |   const home = new HomePage(page);
+        |                ^
+      7 |   const product = new ProductPage(page);
+      8 |
+      9 |   await home.goto();
+        at /Users/kanhaiyayadav/workspace/playwriteAgents/tests/product.spec.ts:6:16
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../test-results/product-Product-detail-opens-from-listing-scaffold--chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../test-results/product-Product-detail-opens-from-listing-scaffold--chromium/error-context.md
+]]>
+</error>
+</testcase>
+</testsuite>
+<testsuite name="promo.spec.ts" timestamp="2026-06-21T10:56:11.207Z" hostname="chromium" tests="1" failures="0" skipped="0" time="0.421" errors="1">
+<testcase name="Apply valid and invalid promo codes (scaffold)" classname="promo.spec.ts" time="0.421">
+<system-out>
+<![CDATA[
+[[ATTACHMENT|../test-results/promo-Apply-valid-and-invalid-promo-codes-scaffold--chromium/test-failed-1.png]]
+
+[[ATTACHMENT|../test-results/promo-Apply-valid-and-invalid-promo-codes-scaffold--chromium/error-context.md]]
+]]>
+</system-out>
+<error message="HomePage is not a constructor" type="TypeError">
+<![CDATA[  [chromium] › promo.spec.ts:3:5 › Apply valid and invalid promo codes (scaffold) ──────────────────
+
+    TypeError: HomePage is not a constructor
+
+      4 |   const { default: HomePage } = await import('./pages/HomePage');
+      5 |   const { default: CheckoutPage } = await import('./pages/CheckoutPage');
+    > 6 |   const home = new HomePage(page);
+        |                ^
+      7 |   const checkout = new CheckoutPage(page);
+      8 |
+      9 |   await home.goto();
+        at /Users/kanhaiyayadav/workspace/playwriteAgents/tests/promo.spec.ts:6:16
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../test-results/promo-Apply-valid-and-invalid-promo-codes-scaffold--chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../test-results/promo-Apply-valid-and-invalid-promo-codes-scaffold--chromium/error-context.md
+]]>
+</error>
+</testcase>
+</testsuite>
+<testsuite name="responsive.spec.ts" timestamp="2026-06-21T10:56:11.207Z" hostname="chromium" tests="1" failures="0" skipped="0" time="0.602" errors="1">
+<testcase name="Search &amp; add flow on mobile viewport (scaffold)" classname="responsive.spec.ts" time="0.602">
+<system-out>
+<![CDATA[
+[[ATTACHMENT|../test-results/responsive-Search-add-flow-on-mobile-viewport-scaffold--chromium/test-failed-1.png]]
+
+[[ATTACHMENT|../test-results/responsive-Search-add-flow-on-mobile-viewport-scaffold--chromium/error-context.md]]
+]]>
+</system-out>
+<error message="HomePage is not a constructor" type="TypeError">
+<![CDATA[  [chromium] › responsive.spec.ts:3:5 › Search & add flow on mobile viewport (scaffold) ────────────
+
+    TypeError: HomePage is not a constructor
+
+      4 |   await page.setViewportSize({ width: 375, height: 812 });
+      5 |   const { default: HomePage } = await import('./pages/HomePage');
+    > 6 |   const home = new HomePage(page);
+        |                ^
+      7 |   await home.goto();
+      8 |   await home.search('apple');
+      9 |   // ensure at least one product shows
+        at /Users/kanhaiyayadav/workspace/playwriteAgents/tests/responsive.spec.ts:6:16
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../test-results/responsive-Search-add-flow-on-mobile-viewport-scaffold--chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../test-results/responsive-Search-add-flow-on-mobile-viewport-scaffold--chromium/error-context.md
+]]>
+</error>
+</testcase>
+</testsuite>
+<testsuite name="search-and-add.spec.ts" timestamp="2026-06-21T10:56:11.207Z" hostname="chromium" tests="1" failures="0" skipped="0" time="14.285" errors="1">
+<testcase name="Search and add flow › Search for product and add to cart" classname="search-and-add.spec.ts" time="14.285">
+<system-out>
+<![CDATA[
+[[ATTACHMENT|../test-results/search-and-add-Search-and--2f060-for-product-and-add-to-cart-chromium/test-failed-1.png]]
+
 [[ATTACHMENT|../test-results/search-and-add-Search-and--2f060-for-product-and-add-to-cart-chromium/error-context.md]]
 ]]>
 </system-out>
-<error message="locator.fill: Target page, context or browser has been closed" type="Error">
+<error message="locator.waitFor: Timeout 10000ms exceeded." type="TimeoutError">
 <![CDATA[  [chromium] › search-and-add.spec.ts:15:7 › Search and add flow › Search for product and add to cart 
 
-    Error: locator.fill: Target page, context or browser has been closed
+    TimeoutError: locator.waitFor: Timeout 10000ms exceeded.
     Call log:
-      - waiting for locator('input.search-keyword')
+      - waiting for locator('input.search-keyword') to be visible
 
 
-       at pages/HomePage.ts:23
+       at pages/HomePage.ts:24
 
-      21 |   async search(query: string) {
-      22 |     await this.searchInput.fill(query);
-    > 23 |     // Wait for results to update
+      22 |     // Ensure the search input is visible and ready before filling
+      23 |     await this.searchInput.waitFor({ state: 'visible', timeout: 10000 });
+    > 24 |     await this.searchInput.fill(query);
          |                            ^
-      24 |     await this.page.waitForTimeout(500);
-      25 |   }
-      26 |
-        at HomePage.search (/Users/kanhaiyayadav/workspace/playwriteAgents/tests/pages/HomePage.ts:23:28)
+      25 |     // Wait for product results to appear / update
+      26 |     await this.page.waitForSelector('.products .product', { timeout: 5000 });
+      27 |   }
+        at HomePage.search (/Users/kanhaiyayadav/workspace/playwriteAgents/tests/pages/HomePage.ts:24:28)
         at /Users/kanhaiyayadav/workspace/playwriteAgents/tests/search-and-add.spec.ts:22:16
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../test-results/search-and-add-Search-and--2f060-for-product-and-add-to-cart-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
 
     Error Context: ../test-results/search-and-add-Search-and--2f060-for-product-and-add-to-cart-chromium/error-context.md
 ]]>
 </error>
 </testcase>
 </testsuite>
-<testsuite name="seed.spec.ts" timestamp="2026-06-21T08:44:39.462Z" hostname="chromium" tests="1" failures="0" skipped="0" time="0.282" errors="0">
-<testcase name="Test group › seed" classname="seed.spec.ts" time="0.282">
+<testsuite name="seed.spec.ts" timestamp="2026-06-21T10:56:11.207Z" hostname="chromium" tests="1" failures="0" skipped="0" time="0.56" errors="0">
+<testcase name="Test group › seed" classname="seed.spec.ts" time="0.56">
+</testcase>
+</testsuite>
+<testsuite name="storage.spec.ts" timestamp="2026-06-21T10:56:11.207Z" hostname="chromium" tests="1" failures="0" skipped="0" time="2.972" errors="0">
+<testcase name="Storage-state export/import scaffold" classname="storage.spec.ts" time="2.972">
+</testcase>
+</testsuite>
+<testsuite name="visual.spec.ts" timestamp="2026-06-21T10:56:11.207Z" hostname="chromium" tests="1" failures="0" skipped="0" time="4.827" errors="0">
+<testcase name="Capture home page screenshot (scaffold)" classname="visual.spec.ts" time="4.827">
+</testcase>
+</testsuite>
+<testsuite name="accessibility.spec.ts" timestamp="2026-06-21T10:56:11.207Z" hostname="firefox" tests="1" failures="0" skipped="0" time="4.571" errors="1">
+<testcase name="Basic accessibility snapshot (scaffold)" classname="accessibility.spec.ts" time="4.571">
+<system-out>
+<![CDATA[
+[[ATTACHMENT|../test-results/accessibility-Basic-accessibility-snapshot-scaffold--firefox/test-failed-1.png]]
+
+[[ATTACHMENT|../test-results/accessibility-Basic-accessibility-snapshot-scaffold--firefox/error-context.md]]
+]]>
+</system-out>
+<error message="Cannot read properties of undefined (reading &apos;snapshot&apos;)" type="TypeError">
+<![CDATA[  [firefox] › accessibility.spec.ts:3:5 › Basic accessibility snapshot (scaffold) ──────────────────
+
+    TypeError: Cannot read properties of undefined (reading 'snapshot')
+
+      3 | test('Basic accessibility snapshot (scaffold)', async ({ page }) => {
+      4 |   await page.goto('/');
+    > 5 |   const snapshot = await page.accessibility.snapshot();
+        |                                             ^
+      6 |   // Ensure snapshot is an object and contains a root
+      7 |   expect(typeof snapshot).toBe('object');
+      8 |   expect(snapshot.role).toBeDefined();
+        at /Users/kanhaiyayadav/workspace/playwriteAgents/tests/accessibility.spec.ts:5:45
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../test-results/accessibility-Basic-accessibility-snapshot-scaffold--firefox/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../test-results/accessibility-Basic-accessibility-snapshot-scaffold--firefox/error-context.md
+]]>
+</error>
+</testcase>
+</testsuite>
+<testsuite name="cart.spec.ts" timestamp="2026-06-21T10:56:11.207Z" hostname="firefox" tests="1" failures="0" skipped="0" time="15.747" errors="1">
+<testcase name="Cart operations › Add product, update quantity and verify totals (scaffold)" classname="cart.spec.ts" time="15.747">
+<system-out>
+<![CDATA[
+[[ATTACHMENT|../test-results/cart-Cart-operations-Add-p-3c87b-and-verify-totals-scaffold--firefox/test-failed-1.png]]
+
+[[ATTACHMENT|../test-results/cart-Cart-operations-Add-p-3c87b-and-verify-totals-scaffold--firefox/error-context.md]]
+]]>
+</system-out>
+<error message="locator.waitFor: Timeout 10000ms exceeded." type="TimeoutError">
+<![CDATA[  [firefox] › cart.spec.ts:15:7 › Cart operations › Add product, update quantity and verify totals (scaffold) 
+
+    TimeoutError: locator.waitFor: Timeout 10000ms exceeded.
+    Call log:
+      - waiting for locator('input.search-keyword') to be visible
+
+
+       at pages/HomePage.ts:24
+
+      22 |     // Ensure the search input is visible and ready before filling
+      23 |     await this.searchInput.waitFor({ state: 'visible', timeout: 10000 });
+    > 24 |     await this.searchInput.fill(query);
+         |                            ^
+      25 |     // Wait for product results to appear / update
+      26 |     await this.page.waitForSelector('.products .product', { timeout: 5000 });
+      27 |   }
+        at HomePage.search (/Users/kanhaiyayadav/workspace/playwriteAgents/tests/pages/HomePage.ts:24:28)
+        at /Users/kanhaiyayadav/workspace/playwriteAgents/tests/cart.spec.ts:25:16
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../test-results/cart-Cart-operations-Add-p-3c87b-and-verify-totals-scaffold--firefox/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../test-results/cart-Cart-operations-Add-p-3c87b-and-verify-totals-scaffold--firefox/error-context.md
+]]>
+</error>
+</testcase>
+</testsuite>
+<testsuite name="check-url.spec.ts" timestamp="2026-06-21T10:56:11.207Z" hostname="firefox" tests="1" failures="0" skipped="0" time="3.81" errors="0">
+<testcase name="Load Rahul Shetty Selenium Practise homepage" classname="check-url.spec.ts" time="3.81">
+</testcase>
+</testsuite>
+<testsuite name="checkout.spec.ts" timestamp="2026-06-21T10:56:11.207Z" hostname="firefox" tests="1" failures="0" skipped="0" time="15.754" errors="1">
+<testcase name="Checkout flow (scaffold) › Apply promo and validate price change" classname="checkout.spec.ts" time="15.754">
+<system-out>
+<![CDATA[
+[[ATTACHMENT|../test-results/checkout-Checkout-flow-sca-68050-o-and-validate-price-change-firefox/test-failed-1.png]]
+
+[[ATTACHMENT|../test-results/checkout-Checkout-flow-sca-68050-o-and-validate-price-change-firefox/error-context.md]]
+]]>
+</system-out>
+<error message="locator.waitFor: Timeout 10000ms exceeded." type="TimeoutError">
+<![CDATA[  [firefox] › checkout.spec.ts:15:7 › Checkout flow (scaffold) › Apply promo and validate price change 
+
+    TimeoutError: locator.waitFor: Timeout 10000ms exceeded.
+    Call log:
+      - waiting for locator('input.search-keyword') to be visible
+
+
+       at pages/HomePage.ts:24
+
+      22 |     // Ensure the search input is visible and ready before filling
+      23 |     await this.searchInput.waitFor({ state: 'visible', timeout: 10000 });
+    > 24 |     await this.searchInput.fill(query);
+         |                            ^
+      25 |     // Wait for product results to appear / update
+      26 |     await this.page.waitForSelector('.products .product', { timeout: 5000 });
+      27 |   }
+        at HomePage.search (/Users/kanhaiyayadav/workspace/playwriteAgents/tests/pages/HomePage.ts:24:28)
+        at /Users/kanhaiyayadav/workspace/playwriteAgents/tests/checkout.spec.ts:25:16
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../test-results/checkout-Checkout-flow-sca-68050-o-and-validate-price-change-firefox/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../test-results/checkout-Checkout-flow-sca-68050-o-and-validate-price-change-firefox/error-context.md
+]]>
+</error>
+</testcase>
+</testsuite>
+<testsuite name="example.spec.ts" timestamp="2026-06-21T10:56:11.207Z" hostname="firefox" tests="2" failures="0" skipped="0" time="4.739" errors="0">
+<testcase name="has title" classname="example.spec.ts" time="2.874">
+</testcase>
+<testcase name="get started link" classname="example.spec.ts" time="1.865">
+</testcase>
+</testsuite>
+<testsuite name="network.spec.ts" timestamp="2026-06-21T10:56:11.207Z" hostname="firefox" tests="1" failures="0" skipped="0" time="4.703" errors="0">
+<testcase name="Offline handling shows error or offline indicator (scaffold)" classname="network.spec.ts" time="4.703">
+</testcase>
+</testsuite>
+<testsuite name="payment.spec.ts" timestamp="2026-06-21T10:56:11.207Z" hostname="firefox" tests="1" failures="0" skipped="0" time="3.332" errors="0">
+<testcase name="Payment form validation (scaffold)" classname="payment.spec.ts" time="3.332">
+</testcase>
+</testsuite>
+<testsuite name="product.spec.ts" timestamp="2026-06-21T10:56:11.207Z" hostname="firefox" tests="1" failures="0" skipped="0" time="0.743" errors="1">
+<testcase name="Product detail opens from listing (scaffold)" classname="product.spec.ts" time="0.743">
+<system-out>
+<![CDATA[
+[[ATTACHMENT|../test-results/product-Product-detail-opens-from-listing-scaffold--firefox/test-failed-1.png]]
+
+[[ATTACHMENT|../test-results/product-Product-detail-opens-from-listing-scaffold--firefox/error-context.md]]
+]]>
+</system-out>
+<error message="HomePage is not a constructor" type="TypeError">
+<![CDATA[  [firefox] › product.spec.ts:3:5 › Product detail opens from listing (scaffold) ───────────────────
+
+    TypeError: HomePage is not a constructor
+
+      4 |   const { default: HomePage } = await import('./pages/HomePage');
+      5 |   const { default: ProductPage } = await import('./pages/ProductPage');
+    > 6 |   const home = new HomePage(page);
+        |                ^
+      7 |   const product = new ProductPage(page);
+      8 |
+      9 |   await home.goto();
+        at /Users/kanhaiyayadav/workspace/playwriteAgents/tests/product.spec.ts:6:16
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../test-results/product-Product-detail-opens-from-listing-scaffold--firefox/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../test-results/product-Product-detail-opens-from-listing-scaffold--firefox/error-context.md
+]]>
+</error>
+</testcase>
+</testsuite>
+<testsuite name="promo.spec.ts" timestamp="2026-06-21T10:56:11.207Z" hostname="firefox" tests="1" failures="0" skipped="0" time="0.496" errors="1">
+<testcase name="Apply valid and invalid promo codes (scaffold)" classname="promo.spec.ts" time="0.496">
+<system-out>
+<![CDATA[
+[[ATTACHMENT|../test-results/promo-Apply-valid-and-invalid-promo-codes-scaffold--firefox/test-failed-1.png]]
+
+[[ATTACHMENT|../test-results/promo-Apply-valid-and-invalid-promo-codes-scaffold--firefox/error-context.md]]
+]]>
+</system-out>
+<error message="HomePage is not a constructor" type="TypeError">
+<![CDATA[  [firefox] › promo.spec.ts:3:5 › Apply valid and invalid promo codes (scaffold) ───────────────────
+
+    TypeError: HomePage is not a constructor
+
+      4 |   const { default: HomePage } = await import('./pages/HomePage');
+      5 |   const { default: CheckoutPage } = await import('./pages/CheckoutPage');
+    > 6 |   const home = new HomePage(page);
+        |                ^
+      7 |   const checkout = new CheckoutPage(page);
+      8 |
+      9 |   await home.goto();
+        at /Users/kanhaiyayadav/workspace/playwriteAgents/tests/promo.spec.ts:6:16
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../test-results/promo-Apply-valid-and-invalid-promo-codes-scaffold--firefox/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../test-results/promo-Apply-valid-and-invalid-promo-codes-scaffold--firefox/error-context.md
+]]>
+</error>
+</testcase>
+</testsuite>
+<testsuite name="responsive.spec.ts" timestamp="2026-06-21T10:56:11.207Z" hostname="firefox" tests="1" failures="0" skipped="0" time="1.252" errors="1">
+<testcase name="Search &amp; add flow on mobile viewport (scaffold)" classname="responsive.spec.ts" time="1.252">
+<system-out>
+<![CDATA[
+[[ATTACHMENT|../test-results/responsive-Search-add-flow-on-mobile-viewport-scaffold--firefox/test-failed-1.png]]
+
+[[ATTACHMENT|../test-results/responsive-Search-add-flow-on-mobile-viewport-scaffold--firefox/error-context.md]]
+]]>
+</system-out>
+<error message="HomePage is not a constructor" type="TypeError">
+<![CDATA[  [firefox] › responsive.spec.ts:3:5 › Search & add flow on mobile viewport (scaffold) ─────────────
+
+    TypeError: HomePage is not a constructor
+
+      4 |   await page.setViewportSize({ width: 375, height: 812 });
+      5 |   const { default: HomePage } = await import('./pages/HomePage');
+    > 6 |   const home = new HomePage(page);
+        |                ^
+      7 |   await home.goto();
+      8 |   await home.search('apple');
+      9 |   // ensure at least one product shows
+        at /Users/kanhaiyayadav/workspace/playwriteAgents/tests/responsive.spec.ts:6:16
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../test-results/responsive-Search-add-flow-on-mobile-viewport-scaffold--firefox/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../test-results/responsive-Search-add-flow-on-mobile-viewport-scaffold--firefox/error-context.md
+]]>
+</error>
+</testcase>
+</testsuite>
+<testsuite name="search-and-add.spec.ts" timestamp="2026-06-21T10:56:11.207Z" hostname="firefox" tests="1" failures="0" skipped="0" time="15.2" errors="1">
+<testcase name="Search and add flow › Search for product and add to cart" classname="search-and-add.spec.ts" time="15.2">
+<system-out>
+<![CDATA[
+[[ATTACHMENT|../test-results/search-and-add-Search-and--2f060-for-product-and-add-to-cart-firefox/test-failed-1.png]]
+
+[[ATTACHMENT|../test-results/search-and-add-Search-and--2f060-for-product-and-add-to-cart-firefox/error-context.md]]
+]]>
+</system-out>
+<error message="locator.waitFor: Timeout 10000ms exceeded." type="TimeoutError">
+<![CDATA[  [firefox] › search-and-add.spec.ts:15:7 › Search and add flow › Search for product and add to cart 
+
+    TimeoutError: locator.waitFor: Timeout 10000ms exceeded.
+    Call log:
+      - waiting for locator('input.search-keyword') to be visible
+
+
+       at pages/HomePage.ts:24
+
+      22 |     // Ensure the search input is visible and ready before filling
+      23 |     await this.searchInput.waitFor({ state: 'visible', timeout: 10000 });
+    > 24 |     await this.searchInput.fill(query);
+         |                            ^
+      25 |     // Wait for product results to appear / update
+      26 |     await this.page.waitForSelector('.products .product', { timeout: 5000 });
+      27 |   }
+        at HomePage.search (/Users/kanhaiyayadav/workspace/playwriteAgents/tests/pages/HomePage.ts:24:28)
+        at /Users/kanhaiyayadav/workspace/playwriteAgents/tests/search-and-add.spec.ts:22:16
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../test-results/search-and-add-Search-and--2f060-for-product-and-add-to-cart-firefox/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../test-results/search-and-add-Search-and--2f060-for-product-and-add-to-cart-firefox/error-context.md
+]]>
+</error>
+</testcase>
+</testsuite>
+<testsuite name="seed.spec.ts" timestamp="2026-06-21T10:56:11.207Z" hostname="firefox" tests="1" failures="0" skipped="0" time="1.17" errors="0">
+<testcase name="Test group › seed" classname="seed.spec.ts" time="1.17">
+</testcase>
+</testsuite>
+<testsuite name="storage.spec.ts" timestamp="2026-06-21T10:56:11.207Z" hostname="firefox" tests="1" failures="0" skipped="0" time="3.643" errors="0">
+<testcase name="Storage-state export/import scaffold" classname="storage.spec.ts" time="3.643">
+</testcase>
+</testsuite>
+<testsuite name="visual.spec.ts" timestamp="2026-06-21T10:56:11.207Z" hostname="firefox" tests="1" failures="0" skipped="0" time="4.385" errors="0">
+<testcase name="Capture home page screenshot (scaffold)" classname="visual.spec.ts" time="4.385">
+</testcase>
+</testsuite>
+<testsuite name="accessibility.spec.ts" timestamp="2026-06-21T10:56:11.207Z" hostname="webkit" tests="1" failures="0" skipped="0" time="9.694" errors="1">
+<testcase name="Basic accessibility snapshot (scaffold)" classname="accessibility.spec.ts" time="9.694">
+<system-out>
+<![CDATA[
+[[ATTACHMENT|../test-results/accessibility-Basic-accessibility-snapshot-scaffold--webkit/test-failed-1.png]]
+
+[[ATTACHMENT|../test-results/accessibility-Basic-accessibility-snapshot-scaffold--webkit/error-context.md]]
+]]>
+</system-out>
+<error message="Cannot read properties of undefined (reading &apos;snapshot&apos;)" type="TypeError">
+<![CDATA[  [webkit] › accessibility.spec.ts:3:5 › Basic accessibility snapshot (scaffold) ───────────────────
+
+    TypeError: Cannot read properties of undefined (reading 'snapshot')
+
+      3 | test('Basic accessibility snapshot (scaffold)', async ({ page }) => {
+      4 |   await page.goto('/');
+    > 5 |   const snapshot = await page.accessibility.snapshot();
+        |                                             ^
+      6 |   // Ensure snapshot is an object and contains a root
+      7 |   expect(typeof snapshot).toBe('object');
+      8 |   expect(snapshot.role).toBeDefined();
+        at /Users/kanhaiyayadav/workspace/playwriteAgents/tests/accessibility.spec.ts:5:45
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../test-results/accessibility-Basic-accessibility-snapshot-scaffold--webkit/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../test-results/accessibility-Basic-accessibility-snapshot-scaffold--webkit/error-context.md
+]]>
+</error>
+</testcase>
+</testsuite>
+<testsuite name="cart.spec.ts" timestamp="2026-06-21T10:56:11.207Z" hostname="webkit" tests="1" failures="0" skipped="0" time="21.182" errors="1">
+<testcase name="Cart operations › Add product, update quantity and verify totals (scaffold)" classname="cart.spec.ts" time="21.182">
+<system-out>
+<![CDATA[
+[[ATTACHMENT|../test-results/cart-Cart-operations-Add-p-3c87b-and-verify-totals-scaffold--webkit/test-failed-1.png]]
+
+[[ATTACHMENT|../test-results/cart-Cart-operations-Add-p-3c87b-and-verify-totals-scaffold--webkit/error-context.md]]
+]]>
+</system-out>
+<error message="locator.waitFor: Timeout 10000ms exceeded." type="TimeoutError">
+<![CDATA[  [webkit] › cart.spec.ts:15:7 › Cart operations › Add product, update quantity and verify totals (scaffold) 
+
+    TimeoutError: locator.waitFor: Timeout 10000ms exceeded.
+    Call log:
+      - waiting for locator('input.search-keyword') to be visible
+
+
+       at pages/HomePage.ts:24
+
+      22 |     // Ensure the search input is visible and ready before filling
+      23 |     await this.searchInput.waitFor({ state: 'visible', timeout: 10000 });
+    > 24 |     await this.searchInput.fill(query);
+         |                            ^
+      25 |     // Wait for product results to appear / update
+      26 |     await this.page.waitForSelector('.products .product', { timeout: 5000 });
+      27 |   }
+        at HomePage.search (/Users/kanhaiyayadav/workspace/playwriteAgents/tests/pages/HomePage.ts:24:28)
+        at /Users/kanhaiyayadav/workspace/playwriteAgents/tests/cart.spec.ts:25:16
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../test-results/cart-Cart-operations-Add-p-3c87b-and-verify-totals-scaffold--webkit/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../test-results/cart-Cart-operations-Add-p-3c87b-and-verify-totals-scaffold--webkit/error-context.md
+]]>
+</error>
+</testcase>
+</testsuite>
+<testsuite name="check-url.spec.ts" timestamp="2026-06-21T10:56:11.207Z" hostname="webkit" tests="1" failures="0" skipped="0" time="1.893" errors="0">
+<testcase name="Load Rahul Shetty Selenium Practise homepage" classname="check-url.spec.ts" time="1.893">
+</testcase>
+</testsuite>
+<testsuite name="checkout.spec.ts" timestamp="2026-06-21T10:56:11.207Z" hostname="webkit" tests="1" failures="0" skipped="0" time="14.208" errors="1">
+<testcase name="Checkout flow (scaffold) › Apply promo and validate price change" classname="checkout.spec.ts" time="14.208">
+<system-out>
+<![CDATA[
+[[ATTACHMENT|../test-results/checkout-Checkout-flow-sca-68050-o-and-validate-price-change-webkit/test-failed-1.png]]
+
+[[ATTACHMENT|../test-results/checkout-Checkout-flow-sca-68050-o-and-validate-price-change-webkit/error-context.md]]
+]]>
+</system-out>
+<error message="locator.waitFor: Timeout 10000ms exceeded." type="TimeoutError">
+<![CDATA[  [webkit] › checkout.spec.ts:15:7 › Checkout flow (scaffold) › Apply promo and validate price change 
+
+    TimeoutError: locator.waitFor: Timeout 10000ms exceeded.
+    Call log:
+      - waiting for locator('input.search-keyword') to be visible
+
+
+       at pages/HomePage.ts:24
+
+      22 |     // Ensure the search input is visible and ready before filling
+      23 |     await this.searchInput.waitFor({ state: 'visible', timeout: 10000 });
+    > 24 |     await this.searchInput.fill(query);
+         |                            ^
+      25 |     // Wait for product results to appear / update
+      26 |     await this.page.waitForSelector('.products .product', { timeout: 5000 });
+      27 |   }
+        at HomePage.search (/Users/kanhaiyayadav/workspace/playwriteAgents/tests/pages/HomePage.ts:24:28)
+        at /Users/kanhaiyayadav/workspace/playwriteAgents/tests/checkout.spec.ts:25:16
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../test-results/checkout-Checkout-flow-sca-68050-o-and-validate-price-change-webkit/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../test-results/checkout-Checkout-flow-sca-68050-o-and-validate-price-change-webkit/error-context.md
+]]>
+</error>
+</testcase>
+</testsuite>
+<testsuite name="example.spec.ts" timestamp="2026-06-21T10:56:11.207Z" hostname="webkit" tests="2" failures="0" skipped="0" time="2.241" errors="0">
+<testcase name="has title" classname="example.spec.ts" time="1.068">
+</testcase>
+<testcase name="get started link" classname="example.spec.ts" time="1.173">
+</testcase>
+</testsuite>
+<testsuite name="network.spec.ts" timestamp="2026-06-21T10:56:11.207Z" hostname="webkit" tests="1" failures="0" skipped="0" time="3.549" errors="1">
+<testcase name="Offline handling shows error or offline indicator (scaffold)" classname="network.spec.ts" time="3.549">
+<system-out>
+<![CDATA[
+[[ATTACHMENT|../test-results/network-Offline-handling-s-27936-offline-indicator-scaffold--webkit/test-failed-1.png]]
+
+[[ATTACHMENT|../test-results/network-Offline-handling-s-27936-offline-indicator-scaffold--webkit/error-context.md]]
+]]>
+</system-out>
+<error message="page.reload: WebKit encountered an internal error" type="Error">
+<![CDATA[  [webkit] › network.spec.ts:3:5 › Offline handling shows error or offline indicator (scaffold) ────
+
+    Error: page.reload: WebKit encountered an internal error
+    Call log:
+      - waiting for navigation until "load"
+
+
+       5 |   await page.context().setOffline(true);
+       6 |   // Reload to simulate offline navigation
+    >  7 |   await page.reload();
+         |              ^
+       8 |   // Check for some offline indicator or failure state - scaffold
+       9 |   expect(await page.title()).toBeTruthy();
+      10 | });
+        at /Users/kanhaiyayadav/workspace/playwriteAgents/tests/network.spec.ts:7:14
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../test-results/network-Offline-handling-s-27936-offline-indicator-scaffold--webkit/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../test-results/network-Offline-handling-s-27936-offline-indicator-scaffold--webkit/error-context.md
+]]>
+</error>
+</testcase>
+</testsuite>
+<testsuite name="payment.spec.ts" timestamp="2026-06-21T10:56:11.207Z" hostname="webkit" tests="1" failures="0" skipped="0" time="6.883" errors="0">
+<testcase name="Payment form validation (scaffold)" classname="payment.spec.ts" time="6.883">
+</testcase>
+</testsuite>
+<testsuite name="product.spec.ts" timestamp="2026-06-21T10:56:11.207Z" hostname="webkit" tests="1" failures="0" skipped="0" time="0.499" errors="1">
+<testcase name="Product detail opens from listing (scaffold)" classname="product.spec.ts" time="0.499">
+<system-out>
+<![CDATA[
+[[ATTACHMENT|../test-results/product-Product-detail-opens-from-listing-scaffold--webkit/test-failed-1.png]]
+
+[[ATTACHMENT|../test-results/product-Product-detail-opens-from-listing-scaffold--webkit/error-context.md]]
+]]>
+</system-out>
+<error message="HomePage is not a constructor" type="TypeError">
+<![CDATA[  [webkit] › product.spec.ts:3:5 › Product detail opens from listing (scaffold) ────────────────────
+
+    TypeError: HomePage is not a constructor
+
+      4 |   const { default: HomePage } = await import('./pages/HomePage');
+      5 |   const { default: ProductPage } = await import('./pages/ProductPage');
+    > 6 |   const home = new HomePage(page);
+        |                ^
+      7 |   const product = new ProductPage(page);
+      8 |
+      9 |   await home.goto();
+        at /Users/kanhaiyayadav/workspace/playwriteAgents/tests/product.spec.ts:6:16
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../test-results/product-Product-detail-opens-from-listing-scaffold--webkit/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../test-results/product-Product-detail-opens-from-listing-scaffold--webkit/error-context.md
+]]>
+</error>
+</testcase>
+</testsuite>
+<testsuite name="promo.spec.ts" timestamp="2026-06-21T10:56:11.207Z" hostname="webkit" tests="1" failures="0" skipped="0" time="0.483" errors="1">
+<testcase name="Apply valid and invalid promo codes (scaffold)" classname="promo.spec.ts" time="0.483">
+<system-out>
+<![CDATA[
+[[ATTACHMENT|../test-results/promo-Apply-valid-and-invalid-promo-codes-scaffold--webkit/test-failed-1.png]]
+
+[[ATTACHMENT|../test-results/promo-Apply-valid-and-invalid-promo-codes-scaffold--webkit/error-context.md]]
+]]>
+</system-out>
+<error message="HomePage is not a constructor" type="TypeError">
+<![CDATA[  [webkit] › promo.spec.ts:3:5 › Apply valid and invalid promo codes (scaffold) ────────────────────
+
+    TypeError: HomePage is not a constructor
+
+      4 |   const { default: HomePage } = await import('./pages/HomePage');
+      5 |   const { default: CheckoutPage } = await import('./pages/CheckoutPage');
+    > 6 |   const home = new HomePage(page);
+        |                ^
+      7 |   const checkout = new CheckoutPage(page);
+      8 |
+      9 |   await home.goto();
+        at /Users/kanhaiyayadav/workspace/playwriteAgents/tests/promo.spec.ts:6:16
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../test-results/promo-Apply-valid-and-invalid-promo-codes-scaffold--webkit/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../test-results/promo-Apply-valid-and-invalid-promo-codes-scaffold--webkit/error-context.md
+]]>
+</error>
+</testcase>
+</testsuite>
+<testsuite name="responsive.spec.ts" timestamp="2026-06-21T10:56:11.207Z" hostname="webkit" tests="1" failures="0" skipped="0" time="0.509" errors="1">
+<testcase name="Search &amp; add flow on mobile viewport (scaffold)" classname="responsive.spec.ts" time="0.509">
+<system-out>
+<![CDATA[
+[[ATTACHMENT|../test-results/responsive-Search-add-flow-on-mobile-viewport-scaffold--webkit/test-failed-1.png]]
+
+[[ATTACHMENT|../test-results/responsive-Search-add-flow-on-mobile-viewport-scaffold--webkit/error-context.md]]
+]]>
+</system-out>
+<error message="HomePage is not a constructor" type="TypeError">
+<![CDATA[  [webkit] › responsive.spec.ts:3:5 › Search & add flow on mobile viewport (scaffold) ──────────────
+
+    TypeError: HomePage is not a constructor
+
+      4 |   await page.setViewportSize({ width: 375, height: 812 });
+      5 |   const { default: HomePage } = await import('./pages/HomePage');
+    > 6 |   const home = new HomePage(page);
+        |                ^
+      7 |   await home.goto();
+      8 |   await home.search('apple');
+      9 |   // ensure at least one product shows
+        at /Users/kanhaiyayadav/workspace/playwriteAgents/tests/responsive.spec.ts:6:16
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../test-results/responsive-Search-add-flow-on-mobile-viewport-scaffold--webkit/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../test-results/responsive-Search-add-flow-on-mobile-viewport-scaffold--webkit/error-context.md
+]]>
+</error>
+</testcase>
+</testsuite>
+<testsuite name="search-and-add.spec.ts" timestamp="2026-06-21T10:56:11.207Z" hostname="webkit" tests="1" failures="0" skipped="0" time="15.943" errors="1">
+<testcase name="Search and add flow › Search for product and add to cart" classname="search-and-add.spec.ts" time="15.943">
+<system-out>
+<![CDATA[
+[[ATTACHMENT|../test-results/search-and-add-Search-and--2f060-for-product-and-add-to-cart-webkit/test-failed-1.png]]
+
+[[ATTACHMENT|../test-results/search-and-add-Search-and--2f060-for-product-and-add-to-cart-webkit/error-context.md]]
+]]>
+</system-out>
+<error message="locator.waitFor: Timeout 10000ms exceeded." type="TimeoutError">
+<![CDATA[  [webkit] › search-and-add.spec.ts:15:7 › Search and add flow › Search for product and add to cart 
+
+    TimeoutError: locator.waitFor: Timeout 10000ms exceeded.
+    Call log:
+      - waiting for locator('input.search-keyword') to be visible
+
+
+       at pages/HomePage.ts:24
+
+      22 |     // Ensure the search input is visible and ready before filling
+      23 |     await this.searchInput.waitFor({ state: 'visible', timeout: 10000 });
+    > 24 |     await this.searchInput.fill(query);
+         |                            ^
+      25 |     // Wait for product results to appear / update
+      26 |     await this.page.waitForSelector('.products .product', { timeout: 5000 });
+      27 |   }
+        at HomePage.search (/Users/kanhaiyayadav/workspace/playwriteAgents/tests/pages/HomePage.ts:24:28)
+        at /Users/kanhaiyayadav/workspace/playwriteAgents/tests/search-and-add.spec.ts:22:16
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../test-results/search-and-add-Search-and--2f060-for-product-and-add-to-cart-webkit/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../test-results/search-and-add-Search-and--2f060-for-product-and-add-to-cart-webkit/error-context.md
+]]>
+</error>
+</testcase>
+</testsuite>
+<testsuite name="seed.spec.ts" timestamp="2026-06-21T10:56:11.207Z" hostname="webkit" tests="1" failures="0" skipped="0" time="0.168" errors="0">
+<testcase name="Test group › seed" classname="seed.spec.ts" time="0.168">
+</testcase>
+</testsuite>
+<testsuite name="storage.spec.ts" timestamp="2026-06-21T10:56:11.207Z" hostname="webkit" tests="1" failures="0" skipped="0" time="6.723" errors="0">
+<testcase name="Storage-state export/import scaffold" classname="storage.spec.ts" time="6.723">
+</testcase>
+</testsuite>
+<testsuite name="visual.spec.ts" timestamp="2026-06-21T10:56:11.207Z" hostname="webkit" tests="1" failures="0" skipped="0" time="6.731" errors="0">
+<testcase name="Capture home page screenshot (scaffold)" classname="visual.spec.ts" time="6.731">
 </testcase>
 </testsuite>
 </testsuites>
