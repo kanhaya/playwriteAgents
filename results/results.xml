@@ -1,0 +1,120 @@
+<testsuites id="" name="" tests="6" failures="0" skipped="0" errors="3" time="19.524806">
+<testsuite name="cart.spec.ts" timestamp="2026-06-21T08:44:39.462Z" hostname="chromium" tests="1" failures="0" skipped="0" time="15.996" errors="1">
+<testcase name="Cart operations › Add product, update quantity and verify totals (scaffold)" classname="cart.spec.ts" time="15.996">
+<system-out>
+<![CDATA[
+[[ATTACHMENT|../test-results/cart-Cart-operations-Add-p-3c87b-and-verify-totals-scaffold--chromium/test-failed-1.png]]
+
+[[ATTACHMENT|../test-results/cart-Cart-operations-Add-p-3c87b-and-verify-totals-scaffold--chromium/error-context.md]]
+]]>
+</system-out>
+<error message="locator.fill: Timeout 10000ms exceeded." type="TimeoutError">
+<![CDATA[  [chromium] › cart.spec.ts:15:7 › Cart operations › Add product, update quantity and verify totals (scaffold) 
+
+    TimeoutError: locator.fill: Timeout 10000ms exceeded.
+    Call log:
+      - waiting for locator('input.search-keyword')
+
+
+       at pages/HomePage.ts:23
+
+      21 |   async search(query: string) {
+      22 |     await this.searchInput.fill(query);
+    > 23 |     // Wait for results to update
+         |                            ^
+      24 |     await this.page.waitForTimeout(500);
+      25 |   }
+      26 |
+        at HomePage.search (/Users/kanhaiyayadav/workspace/playwriteAgents/tests/pages/HomePage.ts:23:28)
+        at /Users/kanhaiyayadav/workspace/playwriteAgents/tests/cart.spec.ts:25:16
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../test-results/cart-Cart-operations-Add-p-3c87b-and-verify-totals-scaffold--chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../test-results/cart-Cart-operations-Add-p-3c87b-and-verify-totals-scaffold--chromium/error-context.md
+]]>
+</error>
+</testcase>
+</testsuite>
+<testsuite name="checkout.spec.ts" timestamp="2026-06-21T08:44:39.462Z" hostname="chromium" tests="1" failures="0" skipped="0" time="15.934" errors="1">
+<testcase name="Checkout flow (scaffold) › Apply promo and validate price change" classname="checkout.spec.ts" time="15.934">
+<system-out>
+<![CDATA[
+[[ATTACHMENT|../test-results/checkout-Checkout-flow-sca-68050-o-and-validate-price-change-chromium/test-failed-1.png]]
+
+[[ATTACHMENT|../test-results/checkout-Checkout-flow-sca-68050-o-and-validate-price-change-chromium/error-context.md]]
+]]>
+</system-out>
+<error message="locator.fill: Timeout 10000ms exceeded." type="TimeoutError">
+<![CDATA[  [chromium] › checkout.spec.ts:15:7 › Checkout flow (scaffold) › Apply promo and validate price change 
+
+    TimeoutError: locator.fill: Timeout 10000ms exceeded.
+    Call log:
+      - waiting for locator('input.search-keyword')
+
+
+       at pages/HomePage.ts:23
+
+      21 |   async search(query: string) {
+      22 |     await this.searchInput.fill(query);
+    > 23 |     // Wait for results to update
+         |                            ^
+      24 |     await this.page.waitForTimeout(500);
+      25 |   }
+      26 |
+        at HomePage.search (/Users/kanhaiyayadav/workspace/playwriteAgents/tests/pages/HomePage.ts:23:28)
+        at /Users/kanhaiyayadav/workspace/playwriteAgents/tests/checkout.spec.ts:25:16
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../test-results/checkout-Checkout-flow-sca-68050-o-and-validate-price-change-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../test-results/checkout-Checkout-flow-sca-68050-o-and-validate-price-change-chromium/error-context.md
+]]>
+</error>
+</testcase>
+</testsuite>
+<testsuite name="example.spec.ts" timestamp="2026-06-21T08:44:39.462Z" hostname="chromium" tests="2" failures="0" skipped="0" time="9.187" errors="0">
+<testcase name="has title" classname="example.spec.ts" time="4.465">
+</testcase>
+<testcase name="get started link" classname="example.spec.ts" time="4.722">
+</testcase>
+</testsuite>
+<testsuite name="search-and-add.spec.ts" timestamp="2026-06-21T08:44:39.462Z" hostname="chromium" tests="1" failures="0" skipped="0" time="10.552" errors="1">
+<testcase name="Search and add flow › Search for product and add to cart" classname="search-and-add.spec.ts" time="10.552">
+<system-out>
+<![CDATA[
+[[ATTACHMENT|../test-results/search-and-add-Search-and--2f060-for-product-and-add-to-cart-chromium/error-context.md]]
+]]>
+</system-out>
+<error message="locator.fill: Target page, context or browser has been closed" type="Error">
+<![CDATA[  [chromium] › search-and-add.spec.ts:15:7 › Search and add flow › Search for product and add to cart 
+
+    Error: locator.fill: Target page, context or browser has been closed
+    Call log:
+      - waiting for locator('input.search-keyword')
+
+
+       at pages/HomePage.ts:23
+
+      21 |   async search(query: string) {
+      22 |     await this.searchInput.fill(query);
+    > 23 |     // Wait for results to update
+         |                            ^
+      24 |     await this.page.waitForTimeout(500);
+      25 |   }
+      26 |
+        at HomePage.search (/Users/kanhaiyayadav/workspace/playwriteAgents/tests/pages/HomePage.ts:23:28)
+        at /Users/kanhaiyayadav/workspace/playwriteAgents/tests/search-and-add.spec.ts:22:16
+
+    Error Context: ../test-results/search-and-add-Search-and--2f060-for-product-and-add-to-cart-chromium/error-context.md
+]]>
+</error>
+</testcase>
+</testsuite>
+<testsuite name="seed.spec.ts" timestamp="2026-06-21T08:44:39.462Z" hostname="chromium" tests="1" failures="0" skipped="0" time="0.282" errors="0">
+<testcase name="Test group › seed" classname="seed.spec.ts" time="0.282">
+</testcase>
+</testsuite>
+</testsuites>
