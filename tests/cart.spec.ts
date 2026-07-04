@@ -1,22 +1,17 @@
 import { test, expect } from '@playwright/test';
-
-function resolveCtor(mod: any) {
-  if (!mod) return mod;
-  if (typeof mod === 'function') return mod;
-  if (mod.default) {
-    if (typeof mod.default === 'function') return mod.default;
-    if (mod.default.default && typeof mod.default.default === 'function') return mod.default.default;
-  }
-  if (mod.HomePage && typeof mod.HomePage === 'function') return mod.HomePage;
-  return mod;
-}
+import HomePage from './pages/HomePage';
+import CartPage from './pages/CartPage';
 
 test.describe('Cart operations', () => {
   test('Add product, update quantity and verify totals (scaffold)', async ({ page }) => {
-    const modHome = await import('./pages/HomePage');
-    const modCart = await import('./pages/CartPage');
-    const HomePage = resolveCtor(modHome);
-    const CartPage = resolveCtor(modCart);
+    if (typeof HomePage !== 'function') {
+      const mod = await import('./pages/HomePage');
+      throw new Error(`HomePage is not a constructor. Exports: ${Object.keys(mod).join(', ')}`);
+    }
+    if (typeof CartPage !== 'function') {
+      const mod = await import('./pages/CartPage');
+      throw new Error(`CartPage is not a constructor. Exports: ${Object.keys(mod).join(', ')}`);
+    }
 
     const home = new HomePage(page);
     const cart = new CartPage(page);
