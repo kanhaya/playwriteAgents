@@ -9,21 +9,24 @@ export default class HomePage {
   constructor(page: Page) {
     this.page = page;
     this.products = page.locator('.products .product');
-    this.searchInput = page.locator('input.search-keyword');
+    // Updated selector - try input[type="text"] with more flexible matching
+    this.searchInput = page.locator('input[type="text"]').first();
     this.cartBadge = page.locator('.cart-icon .badge');
   }
 
   async goto() {
     await this.page.goto('/');
-    await this.page.waitForLoadState('domcontentloaded');
+    await this.page.waitForLoadState('networkidle');
   }
 
   async search(query: string) {
     // Ensure the search input is visible and ready before filling
-    await this.searchInput.waitFor({ state: 'visible', timeout: 10000 });
+    await this.searchInput.waitFor({ state: 'visible', timeout: 15000 });
+    await this.searchInput.click();
     await this.searchInput.fill(query);
     // Wait for product results to appear / update
-    await this.page.waitForSelector('.products .product', { timeout: 5000 });
+    await this.page.waitForLoadState('networkidle');
+    await this.page.waitForSelector('.products .product', { timeout: 8000 });
   }
 
   getProducts(): Locator {
