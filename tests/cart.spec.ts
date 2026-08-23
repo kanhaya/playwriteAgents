@@ -1,3 +1,8 @@
+// spec: specs/test.plan.md
+// seed: tests/seed.spec.ts
+// generated-by: manual
+// generated-at: 2026-08-23
+
 import { test, expect } from '@playwright/test';
 import HomePage from './pages/HomePage';
 import CartPage from './pages/CartPage';
@@ -17,13 +22,12 @@ test.describe('Cart operations', () => {
     const cart = new CartPage(page);
 
     await home.goto();
-    await home.search('tomato');
-    await home.addProductToCart('Tomato');
+    await home.search('cucumber');
+    await home.addProductToCart('Cucumber');
 
-    await cart.openCart();
-    // Scaffold: exact selectors and assertions need refinement after running against live site
-    // Example placeholder: proceed to checkout to see totals
+    await expect.poll(() => home.cartCount()).toBeGreaterThanOrEqual(1);
     await cart.proceedToCheckout();
-    await expect(page).toHaveURL(/.*checkout/);
+    await expect(page).toHaveURL(/#\/cart/);
+    await expect(cart.promoInput).toBeVisible();
   });
 });

@@ -62,3 +62,24 @@ Key principles:
   of the expected behavior.
 - Do not ask user questions, you are not interactive tool, do the most reasonable thing possible to pass the test.
 - Never wait for networkidle or use other discouraged or deprecated apis
+
+## Edit contract
+
+Every code change you make must include a trace comment block near the fix:
+
+```typescript
+// healed-by: playwright-test-healer
+// healed-at: YYYY-MM-DD
+// reason: <brief explanation of what was broken and how you fixed it>
+```
+
+If a test cannot be fixed after 3 iterations:
+- Mark with `test.fixme()` and add a comment explaining the actual vs expected behavior
+- Add an entry to `specs/flaky-registry.md`
+
+## Scope limits
+
+- Only edit files under `tests/`, `specs/`, `utilities/`, and `scripts/`
+- Never edit `.env*`, credentials, or application source code
+
+Read `.github/agents/AGENTS.md` for shared project context.

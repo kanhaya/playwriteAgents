@@ -1,0 +1,97 @@
+name: Nightly Regression
+
+on:
+  schedule:
+    - cron: '0 2 * * *'
+  workflow_dispatch:
+
+jobs:
+  regression:
+    timeout-minutes: 90
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      issues: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps chromium firefox
+
+      - name: Run full regression suite
+        id: tests
+        continue-on-error: true
+        run: npm run test:ci
+
+      - name: Upload Playwright report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: nightly-playwright-report
+          path: playwright-report/
+          retention-days: 14
+
+      - name: Upload JUnit report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: nightly-junit-results
+          path: results/results.xml
+          retention-days: 14
+
+      - name: Open or update test failure issue
+        if: steps.tests.outcome == 'failure'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const title = 'Nightly regression failed';
+            const body = [
+              '## Nightly regression failure',
+              '',
+              `Workflow: ${context.workflow}`,
+              `Run: ${context.runNumber}`,
+              `SHA: ${context.sha}`,
+              '',
+              '### Next steps',
+              '1. Download artifacts from this workflow run',
+              '2. Run healer: `copilot --agent playwright-test-healer --prompt "Fix failing tests from nightly run"`',
+              '3. Or trigger the **Playwright Test Healer** agentic workflow',
+              '',
+              'See [ROADMAP.md](../blob/main/ROADMAP.md) for the agent pipeline.',
+            ].join('\n');
+
+            const { data: issues } = await github.rest.issues.listForRepo({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              labels: 'test-failure',
+              state: 'open',
+            });
+
+            if (issues.length > 0) {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: issues[0].number,
+                body: `${body}\n\n_Recurring failure on ${new Date().toISOString()}_`,
+              });
+            } else {
+              await github.rest.issues.create({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                title,
+                body,
+                labels: ['test-failure', 'automated'],
+              });
+            }
+
+      - name: Fail job if tests failed
+        if: steps.tests.outcome == 'failure'
+        run: exit 1

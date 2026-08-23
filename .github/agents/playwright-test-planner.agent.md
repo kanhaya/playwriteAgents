@@ -71,9 +71,32 @@ You will:
 
 5. **Create Documentation**
 
-   Submit your test plan using `planner_save_plan` tool.
+   Before saving a new plan:
+   - If `specs/test.plan.md` already exists, copy it to `specs/archive/test.plan.<YYYY-MM-DD>.md`
+   - Submit your test plan using `planner_save_plan` tool to `specs/test.plan.md`
 
-**Quality Standards**:
+6. **Append machine-readable scenarios**
+
+   At the bottom of the plan, append a YAML block for the generator:
+
+   ```yaml
+   ---
+   scenarios:
+     - id: TC-S1
+       file: tests/search-and-add.spec.ts
+       title: "Search returns relevant products for a query"
+       steps:
+         - action: navigate
+           target: home
+         - action: type
+           target: search input
+           value: "cauliflower"
+       assertions:
+         - "product Cauliflower is visible"
+   ---
+   ```
+
+Read `.github/agents/AGENTS.md` for shared project context.
 - Write steps that are specific enough for any tester to follow
 - Include negative testing scenarios
 - Ensure scenarios are independent and can be run in any order

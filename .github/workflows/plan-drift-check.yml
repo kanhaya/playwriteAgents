@@ -1,0 +1,43 @@
+name: Plan Drift Check
+
+on:
+  pull_request:
+    paths:
+      - 'tests/**'
+      - 'specs/**'
+
+jobs:
+  plan-drift:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Check plan ↔ test alignment
+        run: npm run check:plan
+
+      - name: Comment on PR if check fails
+        if: failure()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const body = [
+              '## Plan drift detected',
+              '',
+              'Tests or specs changed but plan coverage check failed.',
+              '',
+              'Please ensure:',
+              '- `specs/test.plan.md` includes scenarios for new tests',
+              '- Spec files have `// spec:` and `// generated-by:` headers',
+              '- Run locally: `npm run check:plan`',
+            ].join('\n');
+
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body,
+            });

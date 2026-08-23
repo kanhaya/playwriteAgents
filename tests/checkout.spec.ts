@@ -1,3 +1,8 @@
+// spec: specs/test.plan.md
+// seed: tests/seed.spec.ts
+// generated-by: manual
+// generated-at: 2026-08-23
+
 import { test, expect } from '@playwright/test';
 import HomePage from './pages/HomePage';
 import CartPage from './pages/CartPage';
@@ -24,7 +29,6 @@ test.describe('Checkout flow (scaffold)', () => {
     // scaffold: apply a promo and validate discount behavior
     await cart.applyPromo('rahulshettyacademy');
 
-    // Placeholder: assert promo feedback is visible
-    await expect(page.locator('.promoInfo')).toBeVisible();
+    await expect(page.getByText(/total after discount/i)).toBeVisible();
   });
 });

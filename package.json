@@ -5,14 +5,22 @@
   "scripts": {
     "test": "playwright test",
     "test:headed": "playwright test --headed",
+    "test:debug": "playwright test --debug",
+    "test:report": "playwright show-report",
+    "test:ci": "playwright test --reporter=list,junit,html",
+    "test:smoke": "playwright test tests/search-and-add.spec.ts tests/cart.spec.ts tests/checkout.spec.ts tests/mixed-grocery-e2e.spec.ts",
+    "mcp": "playwright run-test-mcp-server",
+    "check:plan": "node scripts/check-plan-coverage.mjs",
     "show-report": "playwright show-report"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": "",
+  "engines": {
+    "node": ">=20"
+  },
   "devDependencies": {
-    "@playwright/test": "^1.61.0",
+    "@playwright/test": "^1.62.1",
     "@types/node": "^26.0.0",
     "axe-core": "^4.6.3"
   }

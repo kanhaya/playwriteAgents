@@ -1,3 +1,7 @@
+// spec: specs/test.plan.md
+// generated-by: manual
+// generated-at: 2026-08-23
+
 import { test, expect } from '@playwright/test';
 
 test('has title', async ({ page }) => {

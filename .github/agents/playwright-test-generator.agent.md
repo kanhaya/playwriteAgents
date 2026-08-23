@@ -49,6 +49,16 @@ Generator guidelines:
 - Test title must match the scenario name.
 - Include a comment before each action with the original step text.
 - Use robust locators and waits from the log when available.
+- Every generated file must start with these headers:
+  ```
+  // spec: specs/test.plan.md
+  // seed: tests/seed.spec.ts
+  // generated-by: playwright-test-generator
+  // generated-at: YYYY-MM-DD
+  ```
+- Parse the YAML scenario block at the bottom of `specs/test.plan.md` when available; fall back to markdown steps.
+
+Read `.github/agents/AGENTS.md` for shared project context.
 
 Example:
 // spec: specs/plan.md

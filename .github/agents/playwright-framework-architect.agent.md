@@ -18,6 +18,8 @@ mcp-servers:
       - "*"
 ---
 
+Read `.github/agents/AGENTS.md` for shared project context before making architectural decisions.
+
 # Playwright Framework Architect Agent
 
 ## Role

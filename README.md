@@ -1,97 +1,136 @@
 # playwriteAgents
 
-Project of end-to-end tests built with Playwright and TypeScript.
+Agent-driven Playwright test automation for a sample e-commerce demo application.
 
 ## Summary
 
-This repository contains Playwright test automation for a sample e-commerce demo application. Tests are written in TypeScript and live under the `tests/` folder. The configuration lives in `playwright.config.ts` and test run scripts are defined in `package.json`.
+This repository contains Playwright tests in TypeScript under `tests/`, plus a suite of **GitHub Copilot agents** that plan, generate, heal, and review tests autonomously via the Playwright MCP server.
+
+**Pipeline:** Plan → Generate → Run → Heal → Review
+
+See [ROADMAP.md](ROADMAP.md) for the full agentic testing roadmap.
 
 ## Key files and folders
 
-- `package.json` - scripts and dev dependencies (uses `@playwright/test`).
-- `playwright.config.ts` - Playwright configuration, environment presets, reporter settings and projects.
-- `tests/` - Playwright test files (specs). Add new tests here.
-- `utilities/` - helper utilities (support code used by tests).
-- `artifacts/` - saved images and other artifact outputs.
-- `test-results/` and `playwright-report/` - generated test reports and results.
-- `results/results.xml` - JUnit-style results output by the reporter.
+- `package.json` — scripts and dev dependencies (`@playwright/test`)
+- `playwright.config.ts` — Playwright configuration and environment presets
+- `tests/` — Playwright test specs
+- `tests/pages/` — Page Object Model classes
+- `specs/` — Test plans, flaky registry, run reports
+- `.github/agents/` — Custom Copilot agent definitions
+- `utilities/` — Shared helpers
+- `scripts/` — Plan coverage and automation scripts
+- `results/results.xml` — JUnit output
 
 ## Prerequisites
 
-- Node.js (recommend LTS)
+- Node.js (LTS recommended)
 - npm
+- GitHub Copilot (for agent features)
 
 ## Install
 
-1. Install dependencies:
-
-   npm install
-
-2. Install Playwright browsers (required to run tests locally):
-
-   npx playwright install
-
-## Environment and configuration
-
-The test environment is controlled by the `TEST_ENV` environment variable. Available environments and defaults are defined in `playwright.config.ts`. If `TEST_ENV` is not set, the `dev` preset is used.
-
-Example presets (configured in repo):
-- dev, qa, staging, prod
-
-Each preset configures:
-- `BASE_URL` — base application URL used with `page.goto('')`
-- `HEADLESS` — whether tests run headless
-- `RETRIES` — number of retries for failing tests
-
-To run tests against a different environment set `TEST_ENV` before running the test command, for example:
-
-  TEST_ENV=qa npm test
+```bash
+npm install
+npx playwright install
+```
 
 ## Useful npm scripts
 
-- Run tests (default configured):
+| Script | Description |
+|--------|-------------|
+| `npm test` | Run all tests |
+| `npm run test:headed` | Run with visible browser |
+| `npm run test:ci` | CI reporters (list + junit + html) |
+| `npm run test:smoke` | Critical path smoke suite |
+| `npm run test:debug` | Debug mode |
+| `npm run test:report` | Open HTML report |
+| `npm run mcp` | Start Playwright MCP server for agents |
+| `npm run check:plan` | Verify plan ↔ test alignment |
 
-  npm test
+## Environment
 
-- Run tests headed (browser visible):
+Set `TEST_ENV` before running tests: `dev` (default), `qa`, `staging`, `prod`.
 
-  npm run test:headed
+```bash
+TEST_ENV=qa npm test
+```
 
-- Open the HTML report:
+## Agentic testing
 
-  npm run show-report
+### Agents
 
+| Agent | When to use |
+|-------|-------------|
+| **Orchestrator** | Full pipeline: plan → generate → run → heal |
+| **Planner** | Explore app and write `specs/test.plan.md` |
+| **Generator** | Turn plan scenarios into Playwright specs |
+| **Healer** | Debug and fix failing tests |
+| **Reviewer** | Review test quality on PRs |
+| **Architect** | Framework design and structure |
 
-You can also run Playwright directly for more control, for example:
+Agent definitions live in `.github/agents/`. Shared context: `.github/agents/AGENTS.md`.
 
-- Run a specific spec or project (chromium):
+### Running agents
 
-  npx playwright test tests/example.spec.ts --project=chromium
+**Copilot CLI:**
+```bash
+npm run mcp   # start MCP server in another terminal
+copilot --agent playwright-test-orchestrator --prompt "Cover checkout flows end to end"
+```
 
-- Run with grep to target tests by title:
+**VS Code / Cursor:** Open the Agents panel, select an agent, and prompt.
 
-  npx playwright test -g "add to cart"
+### Traceability
 
-## Reports and artifacts
+Every spec file includes headers:
+```typescript
+// spec: specs/test.plan.md
+// seed: tests/seed.spec.ts
+// generated-by: manual | playwright-test-generator
+```
 
-- HTML report is saved to `playwright-report/` and can be opened via `npm run show-report`.
-- JUnit XML output is written to `results/results.xml` (reporter configured in `playwright.config.ts`).
-- Screenshots and other artifacts are stored under `artifacts/` and `test-results/` (Playwright's output folders).
+Healer edits add:
+```typescript
+// healed-by: playwright-test-healer
+// reason: <explanation>
+```
 
-## Test structure and writing tests
+## CI
 
-- Tests are TypeScript files using Playwright Test runner APIs. Follow the existing style in `tests/`.
-- Use fixtures and helpers from `utilities/` and `tests/data/` as applicable.
+| Workflow | Trigger | Purpose |
+|----------|---------|---------|
+| `ci.yml` | PR / push to main | Smoke tests + plan check |
+| `nightly-regression.yml` | Daily 02:00 UTC | Full regression; opens issue on failure |
+| `plan-drift-check.yml` | PR touching tests/specs | Plan alignment check |
+| `playwright-test-healer.md` | After nightly failure | Agentic healer opens fix PR |
+
+To enable agentic workflows, install the GitHub CLI extension:
+
+```bash
+brew install gh          # if needed
+gh extension install github/gh-aw
+gh aw init --engine copilot
+gh aw compile
+gh aw run playwright-test-healer   # manual healer run
+```
+
+Requires GitHub Copilot billing for the `copilot` engine. The compiled workflow is at `.github/workflows/playwright-test-healer.lock.yml`.
+
+## Test structure
+
+- TypeScript specs using Playwright Test APIs
+- Page Object Model in `tests/pages/`
+- Test data in `tests/data/`
+- Helpers in `utilities/`
 
 ## Contributing
 
-- Create feature branches from `main` and open a pull request.
-- Keep tests deterministic and avoid relying on external state where possible.
+- Create feature branches from `main` and open a pull request
+- Keep tests deterministic; update `specs/test.plan.md` when adding scenarios
+- Run `npm run check:plan` before pushing
 
 ## License
 
-This repository does not include a license file. Add one if you plan to share this project publicly.
+No license file included. Add one if sharing publicly.
 
----
-
-If you want, I can update this README with more detail (examples, CI instructions, badges) or add a CONTRIBUTING.md. Let me know which additions you want.

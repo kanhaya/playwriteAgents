@@ -1,5 +1,4 @@
-import { Page } from '@playwright/test';
-import type { Locator } from '@playwright/test';
+import { expect, type Page, type Locator } from '@playwright/test';
 
 export default class CartPage {
   readonly page: Page;
@@ -10,15 +9,18 @@ export default class CartPage {
 
   constructor(page: Page) {
     this.page = page;
-    this.cartIcon = page.locator('.cart-icon');
-    this.checkoutButton = page.locator('text=PROCEED TO CHECKOUT');
-    this.promoInput = page.locator('input.promoCode');
-    this.applyPromoButton = page.locator('button.promoBtn');
+    this.cartIcon = page.locator('a').filter({ has: page.getByRole('img', { name: 'Cart' }) });
+    this.checkoutButton = page.getByRole('button', { name: 'PROCEED TO CHECKOUT' });
+    this.promoInput = page.getByPlaceholder(/enter promo code/i);
+    this.applyPromoButton = page.getByRole('button', { name: /^apply$/i });
   }
 
   async openCart() {
     await this.cartIcon.click();
-    await this.page.waitForSelector('text=PROCEED TO CHECKOUT');
+    if (!(await this.checkoutButton.isVisible().catch(() => false))) {
+      await this.cartIcon.click();
+    }
+    await this.checkoutButton.waitFor({ state: 'visible', timeout: 10000 });
   }
 
   async proceedToCheckout() {
@@ -30,8 +32,7 @@ export default class CartPage {
   async applyPromo(code: string) {
     await this.promoInput.fill(code);
     await this.applyPromoButton.click();
-    // Wait for promo result
-    await this.page.waitForTimeout(500);
+    await expect(this.page.getByText(/total after discount/i)).toBeVisible({ timeout: 10000 });
   }
 
   async lineTotals(): Promise<number[]> {
