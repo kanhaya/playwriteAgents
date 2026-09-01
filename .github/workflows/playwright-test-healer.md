@@ -17,6 +17,7 @@ permissions:
   issues: read
 engine: copilot
 safe-outputs:
+  report-failure-as-issue: false
   create-pull-request:
     title-prefix: "fix(tests): "
     labels: [agent-healed, automation]
