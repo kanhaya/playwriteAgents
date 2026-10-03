@@ -3,7 +3,7 @@
 // generated-by: manual
 // generated-at: 2026-08-23
 
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../framework/test';
 
 test('Offline handling shows error or offline indicator (scaffold)', async ({ page }) => {
   await page.goto('/');

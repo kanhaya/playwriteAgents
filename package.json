@@ -7,7 +7,7 @@
     "test:headed": "playwright test --headed",
     "test:debug": "playwright test --debug",
     "test:report": "playwright show-report",
-    "test:ci": "playwright test --reporter=list,junit,html",
+    "test:ci": "playwright test",
     "test:smoke": "playwright test tests/search-and-add.spec.ts tests/cart.spec.ts tests/checkout.spec.ts tests/mixed-grocery-e2e.spec.ts",
     "mcp": "playwright run-test-mcp-server",
     "check:plan": "node scripts/check-plan-coverage.mjs",

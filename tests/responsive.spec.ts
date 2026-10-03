@@ -3,7 +3,7 @@
 // generated-by: manual
 // generated-at: 2026-08-23
 
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../framework/test';
 import HomePage from './pages/HomePage';
 
 test('Search & add flow on mobile viewport (scaffold)', async ({ page }) => {

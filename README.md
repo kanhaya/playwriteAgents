@@ -19,8 +19,10 @@ See [ROADMAP.md](ROADMAP.md) for the full agentic testing roadmap.
 - `specs/` — Test plans, flaky registry, run reports
 - `.github/agents/` — Custom Copilot agent definitions
 - `utilities/` — Shared helpers
+- `framework/` — Run id, per-test trace id, and the run manifest reporter
 - `scripts/` — Plan coverage and automation scripts
-- `results/results.xml` — JUnit output
+- `results/results.xml` — JUnit output (generated)
+- `results/run-manifest.json` — Machine-readable run summary for agents and RCA (generated)
 
 ## Prerequisites
 
@@ -41,12 +43,18 @@ npx playwright install
 |--------|-------------|
 | `npm test` | Run all tests |
 | `npm run test:headed` | Run with visible browser |
-| `npm run test:ci` | CI reporters (list + junit + html) |
+| `npm run test:ci` | Same suite as `npm test`; writes JUnit, HTML, and `results/run-manifest.json` |
 | `npm run test:smoke` | Critical path smoke suite |
 | `npm run test:debug` | Debug mode |
 | `npm run test:report` | Open HTML report |
 | `npm run mcp` | Start Playwright MCP server for agents |
 | `npm run check:plan` | Verify plan ↔ test alignment |
+
+## Run evidence
+
+Specs import `test` from `framework/test`. Each invocation gets one `runId`. Each test gets a `traceId`, stored as annotations and sent on browser requests as `x-run-id` and `x-trace-id`.
+
+`results/run-manifest.json` lists every test with its outcome, trace id, error line, and artifact paths. JUnit remains at `results/results.xml` for CI checks. Both files are generated and are not committed.
 
 ## Environment
 

@@ -23,6 +23,7 @@ All agents in this repository must follow these conventions. Read this file befo
 | `tests/seed.spec.ts` | Seed template for generator |
 | `utilities/` | Shared helpers (a11y, resolveCtor) |
 | `config/` | Environment config |
+| `framework/` | Test context, run id, trace id, run manifest |
 | `playwright.config.ts` | Playwright runner config |
 
 ## Environment
@@ -55,7 +56,11 @@ Every spec must start with:
 // seed: tests/seed.spec.ts
 // generated-by: playwright-test-generator | manual
 // generated-at: YYYY-MM-DD
+
+import { test, expect } from '../framework/test';
 ```
+
+Import `test` and `expect` from `framework/test` (path relative to the spec). That fixture assigns `runId` and `traceId` and sends them as `x-run-id` and `x-trace-id` on browser requests. Each run writes `results/results.xml` and `results/run-manifest.json`.
 
 Healer edits must add:
 

@@ -3,7 +3,7 @@
 // generated-by: manual
 // generated-at: 2026-08-23
 
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../framework/test';
 
 test('Storage-state export/import scaffold', async ({ page, context }) => {
   await page.goto('/');

@@ -2,7 +2,7 @@
 // generated-by: manual
 // generated-at: 2026-08-23
 
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../framework/test';
 
 test('Load Rahul Shetty Selenium Practise homepage', async ({ page }) => {
   await page.goto('https://rahulshettyacademy.com/seleniumPractise/');
